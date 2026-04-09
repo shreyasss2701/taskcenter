@@ -239,13 +239,13 @@ def all_task(request):
 
 
 
+
 @login_required(login_url='login_page')
 def delete_task(request, slug):
     print("in delete")
     task_obj = Tasks.objects.get(task_slug=slug)
 
-    # Check if the current user is the owner of the hotel
-    # if request.user not in [task_obj.task_creater, task_obj.task_owner]:
+
     if request.user.id not in [task_obj.task_creater.id, task_obj.task_owner.id]:
         return HttpResponse("You are not authorized")
 
@@ -255,8 +255,6 @@ def delete_task(request, slug):
             task_obj.save()
             print("task active",task_obj.task_active)
             return redirect('/')
-        else:
-            messages.warning(request, "Unauthorized Action")
     
     if task_obj.task_owner == task_obj.task_creater:
         if request.user.id == task_obj.task_creater.id:
@@ -264,8 +262,6 @@ def delete_task(request, slug):
             task_obj.save()
             print("task active",task_obj.task_active)
             return redirect('/')
-        else:
-            messages.warning(request, "Unauthorized Action")
-    return redirect('/')
+    messages.warning(request, "Unauthorized Action")
+    return redirect('edit_task', slug=task_obj.task_slug)
 
-    # return HttpResponseRedirect(request.path_info)
