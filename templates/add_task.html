@@ -1,0 +1,73 @@
+<!--add_hotel.html-->
+{% extends "base.html" %}
+
+{% block start %}
+<div class="container mt-5 pt-5 pb-5">
+
+  <div class="col-6 mx-auto card shadow p-4" style="border:none">
+    <h2>Task</h2>
+      <form method="POST">
+        {% include "alerts.html" %}
+         {% csrf_token %}
+         <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Task Title</label>
+          <input id="email" type="text" name="task_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+
+        </div>
+
+        <div class="mb-3">
+          <label for="floatingTextarea">Task Description</label>
+          <div class="form-floating">
+
+              <textarea name="task_description" id="flora" class="form-control" 
+              placeholder="Leave a comment here" required></textarea>
+
+            </div> </div>
+          {% if assign_flag %}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Assignee's Email address</label>
+              <input type="email" name="task_assignee_mail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+            </div>
+          {% endif%}
+<div class="mb-3">
+  <label class="form-label">Status</label>
+  <select name="task_status" class="form-control" required>
+    <option value="" selected disabled>Select Status</option>
+    <option value="todo">Todo</option>
+    <option value="in_progress">In Progress</option>
+    <option value="done">Done</option>
+  </select>
+</div>
+
+<!--  Priority Dropdown -->
+<div class="mb-3">
+  <label class="form-label">Priority</label>
+  <select name="task_priority" class="form-control"  required>
+    <option value="" selected disabled>Select Priority</option>
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select>
+</div>
+
+<!--  Due Date -->
+<div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Start Date</label>
+                <input type="date" name="task_due_date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+
+              </div>
+
+
+ 
+
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <a class="btn btn-warning" href="{% url 'index'%}">Back</a>
+
+        </form>
+  </div>
+  </div>
+
+  <script>
+    var editor = new FroalaEditor('#flora');		
+  </script>
+{% endblock %}

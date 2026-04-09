@@ -1,0 +1,74 @@
+{% load static %}
+
+<!-- 🔹 TOP GREY BAR -->
+
+
+<!-- 🔹 MAIN NAVBAR -->
+<nav class="navbar navbar-dark bg-info shadow-lg p-2">
+  <div class="container-fluid">
+
+    <!-- Logo + Title -->
+    <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+
+      <img height="40" src="{% static 'taskCenterlogo.png' %}" alt="logo">
+
+
+    </a>
+
+    <!-- Menu -->
+    <ul class="nav justify-content-end align-items-center">
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="/">Home</a>
+      </li>
+
+      {% if user.is_authenticated %}
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'add_task' %}">Add Task</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'assign_task' %}">Assign Task</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'all_task' %}">All Task</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'about' %}">About</a>
+      </li>
+
+      <li class="nav-item ms-2">
+        <a class="btn btn-danger btn-sm" href="{% url 'logout_view' %}">Logout</a>
+      </li>
+
+      {% else %}
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'register' %}">Register</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'login_page' %}">Login</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'about' %}">About</a>
+      </li>
+
+      {% endif %}
+
+    </ul>
+
+  </div>
+</nav>
+
+<div class="w-100 bg-light border-bottom py-1">
+  <div class="container-fluid">
+    <small class="text-muted fw-semibold">
+     {{ name |upper }}
+    </small>
+  </div>
+</div>

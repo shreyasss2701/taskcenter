@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% block start %}
+<div class="container mt-5 pt-5 pb-5">
+
+  <div class="col-6 mx-auto card shadow p-4" style="border:none">
+    <h2>Update Task </h2>
+
+
+
+    {% comment %} <ul class="list-group">
+    {% for booking in hotel.bookings.all %}
+        <li class="list-group-item">Start Date - {{booking.booking_start_date}}  End Date - {{booking.booking_end_date}}</li>
+
+        {% endfor %}
+    </ul> {% endcomment %}
+
+      <form method="POST">
+        {% include "alerts.html" %}
+        {% csrf_token %}
+
+
+
+        <div class="mb-3">
+  <label class="form-label">Task Title</label>
+  <input type="text" name="task_name"
+         value="{{ task.task_name|default:'' }}"
+         class="form-control" required
+         {% if assign_flag and not assigner_flag %}readonly{% endif %}
+         >
+</div>
+
+<div class="mb-3">
+  <label class="form-label">Task Description</label>
+  <textarea name="task_description" class="form-control" required
+  {% if assign_flag and not assigner_flag %}readonly{% endif %}
+  >
+  {{ task.task_description|default:'' }}</textarea>
+</div>
+
+{% if assign_flag %}
+<div class="mb-3">
+  <label class="form-label">Assigner</label>
+  <input type="email" name="task_assignee_mail"
+         value="{{ task.task_creater.email|default:'' }}"
+         class="form-control" readonly>
+</div>
+<div class="mb-3">
+  <label class="form-label">Assignee</label>
+  <input type="email" name="task_assignee_mail"
+         value="{{ task.task_owner.email|default:'' }}"
+         class="form-control" readonly>
+</div>
+{% endif %}
+
+<!--  Status -->
+<div class="mb-3">
+  <label class="form-label">Status</label>
+
+  <select name="task_status" class="form-control"
+    {% if assign_flag and assigner_flag %}
+        disabled
+    {% else %}
+        required
+    {% endif %}>
+
+    <option value="" disabled {% if not task.task_status %}selected{% endif %}>
+      Select Status
+    </option>
+
+    <option value="todo" {% if task.task_status == "todo" %}selected{% endif %}>
+      Todo
+    </option>
+    <option value="in_progress" {% if task.task_status == "in_progress" %}selected{% endif %}>
+      In Progress
+    </option>
+    <option value="done" {% if task.task_status == "done" %}selected{% endif %}>
+      Done
+    </option>
+  </select>
+
+  {% if assign_flag and assigner_flag %}
+    <!-- hidden field to send value -->
+    <input type="hidden" name="task_status" value="{{ task.task_status }}">
+  {% endif %}
+</div>
+
+<!-- Priority -->
+<div class="mb-3">
+  <label class="form-label">Priority</label>
+
+  <select name="task_priority" class="form-control"
+    {% if assign_flag and not assigner_flag %}
+        disabled
+    {% else %}
+        required
+    {% endif %}>
+
+    <option value="" disabled {% if not task.task_priority %}selected{% endif %}>
+      Select Priority
+    </option>
+
+    <option value="low" {% if task.task_priority == "low" %}selected{% endif %}>Low</option>
+    <option value="medium" {% if task.task_priority == "medium" %}selected{% endif %}>Medium</option>
+    <option value="high" {% if task.task_priority == "high" %}selected{% endif %}>High</option>
+  </select>
+
+  {% if assign_flag and not assigner_flag %}
+    <!-- hidden field to send value -->
+    <input type="hidden" name="task_priority" value="{{ task.task_priority }}">
+  {% endif %}
+</div>
+
+<!-- Due Date -->
+<div class="mb-3">
+  <label class="form-label">Due Date</label>
+  <input type="date" name="task_due_date"
+         value="{{ task.task_due_date|date:'Y-m-d' }}"
+         class="form-control" required
+         {% if assign_flag and not assigner_flag %}readonly{% endif %}
+  >
+</div>
+          
+          <a class="btn btn-warning" href="{% url 'index' %}">Back</a>
+          <button type="submit" class="btn btn-info">Update</button>
+          <a class="btn btn-warning" href="{% url 'delete_task' task.task_slug %}" onclick="return confirmDelete();" >Delete</a>
+
+
+        </form>
+  </div>
+  </div>
+
+<script>
+	var editor = new FroalaEditor('#flora');	
+  function confirmDelete() {
+    return confirm("Are you sure you want to delete this task?");
+  }	
+</script>
+
+{% endblock %}

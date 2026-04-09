@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block start %}
+
+<div class="container mt-3">
+
+    <!-- Counts Section -->
+    <div class="row text-center mb-3">
+
+        <div class="col-md-4">
+            <h5 class="fw-bold">
+                To Do : 
+                <span class="badge bg-secondary">
+                    {{ x|default:"0" }}
+                </span>
+            </h5>
+        </div>
+
+        <div class="col-md-4">
+            <h5 class="fw-bold">
+                In Progress : 
+                <span class="badge bg-warning text-dark">
+                    {{ y|default:"0" }}
+                </span>
+            </h5>
+        </div>
+
+        <div class="col-md-4">
+            <h5 class="fw-bold">
+                Done : 
+                <span class="badge bg-success">
+                    {{ z|default:"0" }}
+                </span>
+            </h5>
+        </div>
+
+    </div>
+
+    <!-- Tasks Section -->
+    <div class="row">
+        {% for task in tasks %}
+        <div class="col-md-3 mb-3">
+
+            <div class="card shadow-sm h-100"
+                 onclick="window.location.href='{% url 'edit_task' task.task_slug %}'"
+                 style="cursor: pointer; transition: 0.2s;">
+
+                <div class="card-body">
+                    <h5 class="card-title text-dark">
+                        {{ task.task_name }}
+                    </h5>
+
+                    <hr>
+
+                    <p class="text-muted">
+                        {{ task.task_description }}
+                    </p>
+
+                    <div class="mb-2">
+                        <span class="badge bg-primary">
+                            {{ task.task_status }}
+                        </span>
+                        <span class="badge bg-warning text-dark">
+                            {{ task.task_priority }}
+                        </span>
+                    </div>
+
+                    <p class="mb-1 text-secondary">
+                        {{ task.task_due_date }}
+                    </p>
+
+                    <hr>
+
+                    <p class="text-muted small mb-0">
+                        Assigned to: {{ task.task_owner.email }}
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+<!-- Hover Effect -->
+<style>
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+</style>
+
+{% endblock %}

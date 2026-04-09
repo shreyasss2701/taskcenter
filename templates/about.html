@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block start %}
+<div class="container mt-3 pt-3 pb-3" >
+
+    <div class="col-10 mx-auto card shadow p-4 " style="border:none">
+        <div class="text-center">
+            {% load static %}
+            <img height="140" src="{% static 'taskCenterlogo.png' %}">
+        <h4>The task Management System</h4>
+        </div>
+        <p class="text-justify" style="text-align: justify;">
+            TaskCenter is a Django-based task management system built using the MVT architecture to ensure a clean and scalable structure. It allows users to perform CRUD operations on tasks, including creation, updating, and assignment with proper user relationships. The system implements role-based access control using Django’s authentication framework, enabling assigner and assignee functionalities. Tasks are managed with defined priority levels and status tracking to monitor progress efficiently. The application uses Django ORM for optimized database operations, ensuring data integrity and maintainability.
+        </p>
+        {% comment %} <p>
+            TaskCenter is a Django-based task management system built using the MVT architecture to ensure a clean and scalable structure. It allows users to perform CRUD operations on tasks, including creation, updating, and assignment with proper user relationships. The system implements role-based access control using Django’s authentication framework, enabling assigner and assignee functionalities. Tasks are managed with defined priority levels and status tracking to monitor progress efficiently. The application uses Django ORM for optimized database operations, ensuring data integrity and maintainability.
+        </p> {% endcomment %}
+        <h6 class="text-center" >Developed by Shreyas Sawant | shreyasss2701@gmail.com</a></h6>
+    </div>
+</div>
+{% endblock %}
