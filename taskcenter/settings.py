@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-vm_zru!@tt#sm7ll*7a$r_4=k#^&=-=wo_o&yb23e^@3oxjo%&
 DEBUG = True
 
 ALLOWED_HOSTS = ['taskcenter.onrender.com']
-
+CSRF_TRUSTED_ORIGINS = ["https://taskcenter.onrender.com"]
 
 # Application definition
 
