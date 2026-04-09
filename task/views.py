@@ -163,7 +163,7 @@ def assign_task(request):
         task_due_date = request.POST.get('task_due_date')
 
         print(task_assignee_mail)
-        tasks_owner = get_object_or_404(TaskUser, email=task_assignee_mail)
+        tasks_owner = TaskUser.objects.filter(email=task_assignee_mail).first()
         # tasks_owner= TaskUser.objects.filter(email = task_assignee_mail)
         # task_owner=  TaskUser.objects.get(id = tasks_owner.id)
         if not tasks_owner :
